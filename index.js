@@ -14,11 +14,14 @@ app.post('/', (req, res) => {
     var sourceLanguage = req.body.sourceLanguage;
     var translateText = req.body.data;
 
-    translate(translateText,targetLanguages,sourceLanguage).then((translated)=>{
-        console.log(JSON.stringify(translated, null, 4));
+    var result = Array();
 
-        res.send(JSON.stringify(translated, null, 4));
+    translate(translateText, sourceLanguage, targetLanguages).then((translated) => {
 
+        for (let i = 0; i < translated.length; i++) {
+            result.push(translated[i]["translations"][0]["text"])
+        }
+        res.send(JSON.stringify(result, null, 4));
     });
     // console.log(respo)
     // res.send(JSON.stringify(respo, null, 4));
