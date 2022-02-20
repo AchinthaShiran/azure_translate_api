@@ -1,33 +1,29 @@
-const axios = require('axios').default;
-const { v4: uuidv4 } = require('uuid');
-require('dotenv').config();
+const express = require('express')
+const bp = require('body-parser')
+const app = express()
+const port = 3000
 
-var subscriptionKey = process.env.KEY
-var endpoint = "https://api.cognitive.microsofttranslator.com/";
+var translate = require("./translate.js")
 
-// Add your location, also known as region. The default is global.
-// This is required if using a Cognitive Services resource.
-var location = process.env.LOCATION;
+app.use(bp.json())
+app.use(bp.urlencoded({ extended: true }))
 
-axios({
-    baseURL: endpoint,
-    url: '/translate',
-    method: 'post',
-    headers: {
-        'Ocp-Apim-Subscription-Key': subscriptionKey,
-        'Ocp-Apim-Subscription-Region': location,
-        'Content-type': 'application/json',
-        'X-ClientTraceId': uuidv4().toString()
-    },
-    params: {
-        'api-version': '3.0',
-        'from': 'en',
-        'to': ['de', 'it']
-    },
-    data: [{
-        'text': 'Hello World!'
-    }],
-    responseType: 'json'
-}).then(function(response){
-    console.log(JSON.stringify(response.data, null, 4));
+
+app.post('/', (req, res) => {
+    var targetLanguages = req.body.targetLanguages;
+    var sourceLanguage = req.body.sourceLanguage;
+    var translateText = req.body.data;
+
+    translate(translateText,targetLanguages,sourceLanguage).then((translated)=>{
+        console.log(JSON.stringify(translated, null, 4));
+
+        res.send(JSON.stringify(translated, null, 4));
+
+    });
+    // console.log(respo)
+    // res.send(JSON.stringify(respo, null, 4));
+})
+
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
 })
