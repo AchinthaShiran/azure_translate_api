@@ -7,7 +7,7 @@ var endpoint = "https://api.cognitive.microsofttranslator.com/";
 
 var location = process.env.LOCATION;
 
-module.exports = async function translate(translateText,sourceLanguage,targetLanguages) {    
+module.exports = async function translate(translateText, sourceLanguage, targetLanguages) {
     return axios({
         baseURL: endpoint,
         url: '/translate',
@@ -23,11 +23,11 @@ module.exports = async function translate(translateText,sourceLanguage,targetLan
             'from': sourceLanguage,
             'to': targetLanguages
         },
-        data:translateText,
+        data: translateText,
         responseType: 'json'
-    }).then(function (response) {
+    }).then((response) => {
         return response.data
-    }).catch(function(err){
+    }).catch((err) => {
         return err
     })
 }

@@ -17,14 +17,13 @@ app.post('/', (req, res) => {
     var result = Array();
 
     translate(translateText, sourceLanguage, targetLanguages).then((translated) => {
-
         for (let i = 0; i < translated.length; i++) {
             result.push(translated[i]["translations"][0]["text"])
         }
-        res.send(JSON.stringify(result, null, 4));
+        res.send(result);
+    }).catch((err)=>{
+        res.sendStatus(500);
     });
-    // console.log(respo)
-    // res.send(JSON.stringify(respo, null, 4));
 })
 
 app.listen(port, () => {
