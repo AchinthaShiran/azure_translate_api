@@ -1,7 +1,9 @@
 const express = require('express')
 const bp = require('body-parser')
+const cors = require('cors');
+
 const app = express()
-const port = 3000
+const port = 3001
 
 var translate = require("./translate.js")
 
@@ -9,7 +11,11 @@ app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 
 
-app.post('/', (req, res) => {
+app.use(cors({
+    origin: '*'
+}));
+
+app.post('/api', (req, res) => {
     var targetLanguages = req.body.targetLanguages;
     var sourceLanguage = req.body.sourceLanguage;
     var translateText = req.body.data;
@@ -18,10 +24,12 @@ app.post('/', (req, res) => {
 
     translate(translateText, sourceLanguage, targetLanguages).then((translated) => {
         for (let i = 0; i < translated.length; i++) {
-            result.push(translated[i]["translations"][0]["text"])
+            translated[i]["translations"].forEach(element => {
+                result.push(element["text"])
+            });
         }
         res.send(result);
-    }).catch((err)=>{
+    }).catch((err) => {
         res.sendStatus(500);
     });
 })
