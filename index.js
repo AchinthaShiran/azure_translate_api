@@ -19,10 +19,12 @@ app.post('/api', (req, res) => {
     var targetLanguages = req.body.targetLanguages;
     var sourceLanguage = req.body.sourceLanguage;
     var translateText = req.body.data;
+    var subscriptionKey = req.body.key;
+    var location = req.body.location;
 
     var result = Array();
 
-    translate(translateText, sourceLanguage, targetLanguages).then((translated) => {
+    translate(key,location,translateText, sourceLanguage, targetLanguages).then((translated) => {
         for (let i = 0; i < translated.length; i++) {
             translated[i]["translations"].forEach(element => {
                 result.push(element["text"])
