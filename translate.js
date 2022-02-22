@@ -2,12 +2,12 @@ const axios = require('axios').default;
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 
-var subscriptionKey = process.env.KEY
+//var subscriptionKey = process.env.KEY
 var endpoint = "https://api.cognitive.microsofttranslator.com/";
 
-var location = process.env.LOCATION;
+//var location = process.env.LOCATION;
 
-module.exports = async function translate(translateText, sourceLanguage, targetLanguages) {
+module.exports = async function translate(subscriptionKey,location,translateText, sourceLanguage, targetLanguages) {
     return axios({
         baseURL: endpoint,
         url: '/translate',
