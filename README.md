@@ -1,6 +1,6 @@
 # Nodejs Backend for Azure Translate
 
-Nothing much, just the nodejs code for the Microsoft Azure Translate API
+Nothing much, just the nodejs code for the [Microsoft Azure Translate](https://azure.microsoft.com/en-us/services/cognitive-services/translator/#overview) API
 
 ### Sample Request
 `POST /api`
