@@ -24,7 +24,7 @@ app.post('/api', (req, res) => {
 
     var result = Array();
 
-    translate(subscriptionKey,location,translateText, sourceLanguage, targetLanguages).then((translated) => {
+    translate(subscriptionKey, location, translateText, sourceLanguage, targetLanguages).then((translated) => {
         for (let i = 0; i < translated.length; i++) {
             translated[i]["translations"].forEach(element => {
                 result.push(element["text"])
@@ -32,10 +32,11 @@ app.post('/api', (req, res) => {
         }
         res.send(result);
     }).catch((err) => {
-        res.sendStatus(500);
+        const errorCode = err.message;
+        res.sendStatus(errorCode)
     });
 })
 
-app.listen(process.env.PORT||port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })

@@ -7,7 +7,7 @@ var endpoint = "https://api.cognitive.microsofttranslator.com/";
 
 //var location = process.env.LOCATION;
 
-module.exports = async function translate(subscriptionKey,location,translateText, sourceLanguage, targetLanguages) {
+module.exports = async function translate(subscriptionKey, location, translateText, sourceLanguage, targetLanguages) {
     return axios({
         baseURL: endpoint,
         url: '/translate',
@@ -28,7 +28,6 @@ module.exports = async function translate(subscriptionKey,location,translateText
     }).then((response) => {
         return response.data
     }).catch((err) => {
-        return err
+        throw new Error(err.response.status)
     })
 }
-
